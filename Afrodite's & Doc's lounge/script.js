@@ -45,13 +45,13 @@ let products = JSON.parse(localStorage.getItem("products") || "[]");
 // DISTRITOS
 // ============================================================
 const districts = {
-    "West Elizabeth - 20%": 0.20,
-    "New Hanover - 50%": 0.50,
-    "Lemoyne - 100%": 1.00,
-    "Ambarino - 150%": 1.50,
-    "New Austin - 200%": 2.00,
-    "México - 250%": 2.50,
-    "Guarma - 200%": 2.00
+    "West Elizabeth - 20%": 0,
+    "New Hanover - 50%": 2,
+    "Lemoyne - 100%": 4.00,
+    "Ambarino - 150%": 8.00,
+    "New Austin - 200%": 20.00,
+    "México - 250%": 20.00,
+    "Guarma - 200%": 20.00
 };
 
 // ============================================================
