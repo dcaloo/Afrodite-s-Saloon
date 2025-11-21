@@ -79,14 +79,27 @@ const ordersList = document.getElementById("ordersList");
 
 
 // ============================================================
-// CARREGAR PRODUTOS
+// FUNÇÃO PARA ORDENAR PRODUTOS
+// ============================================================
+function sortProducts() {
+    products.sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
+}
+
+
+// ============================================================
+// CARREGAR PRODUTOS (AGORA EM ORDEM ALFABÉTICA SEMPRE)
 // ============================================================
 function loadProducts() {
+    sortProducts();
+
     productSelect.innerHTML = "";
     products.forEach((p, i) => {
         productSelect.innerHTML += `<option value="${i}">${p.name}</option>`;
     });
+
+    updateItemSummary();
 }
+
 loadProducts();
 
 
@@ -107,6 +120,8 @@ loadDistricts();
 // ============================================================
 function updateItemSummary() {
     const p = products[productSelect.value];
+    if (!p) return;
+
     const qty = Number(qtyInput.value) || 1;
     const dist = districtSelect.value;
 
@@ -114,10 +129,8 @@ function updateItemSummary() {
 
     selectedName.textContent = p.name;
     selectedDetails.textContent = `${qty}x • ${dist}`;
-
     selectedSubtotal.textContent = `$ ${(p.price * qty).toFixed(2)}`;
 }
-updateItemSummary();
 
 productSelect.onchange =
 districtSelect.onchange =
@@ -196,8 +209,9 @@ document.getElementById("finishOrderBtn").onclick = () => {
 
     const subtotal = cart.reduce((a, b) => a + b.price, 0);
     const districtsInCart = [...new Set(cart.map(i => i.district))];
+
     let freightTotal = 0;
-    districtsInCart.forEach(d => freightTotal += (districts[d] || 0));
+    districtsInCart.forEach(d => freightTotal += districts[d] || 0);
 
     const total = subtotal + freightTotal;
 
@@ -250,9 +264,7 @@ function renderOrders() {
                     <button class="ghost" onclick="finishOrder(${o.id})">Concluir</button>
                 </div>
 
-                <div class="order-items">
-                    ${itemsHTML}
-                </div>
+                <div class="order-items">${itemsHTML}</div>
 
                 <div class="order-totals">
                     <div>Subtotal: <strong>$ ${o.subtotal.toFixed(2)}</strong></div>
@@ -273,7 +285,7 @@ renderOrders();
 
 
 // ============================================================
-// CADASTRAR NOVO PRODUTO (AGORA SALVANDO NO LOCALSTORAGE)
+// CADASTRAR NOVO PRODUTO (COM LOCALSTORAGE + ORDEM ALFABÉTICA)
 // ============================================================
 document.getElementById("registerProductBtn").onclick = () => {
     const name = document.getElementById("newProductName").value.trim();
@@ -286,9 +298,10 @@ document.getElementById("registerProductBtn").onclick = () => {
 
     products.push({ name, price });
 
-    // salva atualização
+    // atualizar localStorage
     localStorage.setItem("products", JSON.stringify(products));
 
+    // recarregar lista com organização alfabética
     loadProducts();
 
     document.getElementById("registerMessage").textContent = "Produto cadastrado!";
