@@ -45,7 +45,7 @@ let products = JSON.parse(localStorage.getItem("products") || "[]");
 // DISTRITOS
 // ============================================================
 const districts = {
-    "West Elizabeth%": 0,
+    "West Elizabeth": 0,
     "New Hanover": 2,
     "Lemoyne": 4.00,
     "Ambarino": 8.00,
