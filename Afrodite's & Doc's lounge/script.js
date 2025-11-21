@@ -27,7 +27,6 @@ const defaultProducts = [
     { name: "Achocolatado Quentinho", price: 0.85 },
     { name: "Big Meki do Montanha", price: 4.85 },
     { name: "Pote de Mel", price: 0.50 },
-    { name: "Licor de Café", price: 0.85 },
     { name: "Chocolate Quente", price: 0.85 }
 ];
 
